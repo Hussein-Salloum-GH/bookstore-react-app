@@ -18,6 +18,7 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';
 
 import rootReducer from "./rootReducer";
+import { userLoggedIn } from './actions/auth';
 
 const middleWare = applyMiddleware(Logger, thunk);
 
@@ -26,6 +27,10 @@ const store = createStore(
     composeWithDevTools(middleWare)
 );
 
+if (localStorage.bookstoreJWT) {
+    const user = { token: localStorage.bookstoreJWT };
+    store.dispatch(userLoggedIn(user));
+}
 
 ReactDOM.render(
     <BrowserRouter>
